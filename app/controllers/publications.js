@@ -25,4 +25,3 @@ exports.index = async(function*(req, res) {
   res.end(JSON.stringify({ publications }));
 });
 
-console.log('123');
