@@ -12,7 +12,7 @@ const { Schema } = mongoose;
 const PublicationSchema = new Schema({
   doi: { type: String, trim: true },
   title: { type: String, trim: true },
-  issn: [{ type: String }],
+  issn: [{ type: String, trim: true }],
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -23,7 +23,11 @@ const PublicationSchema = new Schema({
 PublicationSchema.path('doi').required(true, 'Publication doi cannot be blank');
 PublicationSchema.path('title').required(
   true,
-  'Publication body cannot be blank'
+  'Publication title cannot be blank'
+);
+PublicationSchema.path('issn').required(
+  true,
+  'Publication issn cannot be blank'
 );
 
 /**
@@ -38,17 +42,16 @@ PublicationSchema.statics = {
    * @api private
    */
 
-  list: function(options) {
-    // const criteria = options.criteria || {};
-    // const page = options.page || 0;
-    // const limit = options.limit || 30;
-    // return this.find(criteria)
-    //   .populate('user', 'name username')
-    //   .sort({ createdAt: -1 })
-    //   .limit(limit)
-    //   .skip(limit * page)
-    //   .exec();
+  list: function({ limit, offset }) {
+    return this.find()
+      .select('doi title issn')
+      .sort({ doi: 1 })
+      .limit(limit)
+      .skip(offset)
+      .exec();
   }
 };
 
-mongoose.model('Publication', PublicationSchema);
+module.exports = {
+  Publication: mongoose.model('Publication', PublicationSchema)
+};
