@@ -16,6 +16,6 @@ module.exports = function connect() {
 };
 
 function clearDB() {
-  // clean publications on db at open
-  mongoose.connection.db.dropCollection('publications', _ => {});
+  // clean articles on db at open
+  mongoose.connection.db.dropCollection('articles', _ => {});
 }

@@ -1,4 +1,4 @@
-const Publication = require('mongoose').model('Publication');
+const Article = require('mongoose').model('Article');
 const fetchData = require('./fetchData.js');
 
 module.exports = async function(callback) {
@@ -6,14 +6,14 @@ module.exports = async function(callback) {
   const items = (await fetchData()).message.items;
 
   // prepare the data to store
-  const publications = items.map(({ DOI, title, ISSN }) => ({
+  const articles = items.map(({ DOI, title, ISSN }) => ({
     doi: DOI,
     title: title.toString(),
     issn: ISSN
   }));
 
   // save on db
-  Publication.insertMany(publications, err => {
+  Article.insertMany(articles, err => {
     if (err) console.log(err);
     else if (callback) callback();
   });

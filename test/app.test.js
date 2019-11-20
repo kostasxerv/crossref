@@ -4,7 +4,7 @@ const https = require('https');
 
 const app = require('../server');
 const saveData = require('../app/controllers/saveData');
-const Publication = require('mongoose').model('Publication');
+const Article = require('mongoose').model('Article');
 
 describe('APP Tests', function() {
   describe('# Remote API Test', function() {
@@ -22,7 +22,7 @@ describe('APP Tests', function() {
     });
 
     it('should fetch data from the Database', function(done) {
-      Publication.find({}, (err, data) => {
+      Article.find({}, (err, data) => {
         if (err) {
           console.error(err);
         }
@@ -35,13 +35,13 @@ describe('APP Tests', function() {
   describe('# API TEST', function() {
     it('should fetch data from the API', function(done) {
       request(app)
-        .get('/publications')
+        .get('/articles')
         .end((err, res) => {
           if (err) {
             console.error(err);
           }
           expect(res.statusCode).to.be.equal(200);
-          expect(res.body).to.haveOwnProperty('publications');
+          expect(res.body).to.haveOwnProperty('articles');
 
           done();
         });
@@ -49,12 +49,12 @@ describe('APP Tests', function() {
 
     it('should fetch data from the API using query parameter "limit"', function(done) {
       request(app)
-        .get('/publications?limit=5')
+        .get('/articles?limit=5')
         .end((err, res) => {
           if (err) {
             console.error(err);
           }
-          expect(res.body.publications).to.have.lengthOf(5);
+          expect(res.body.articles).to.have.lengthOf(5);
 
           done();
         });
@@ -62,34 +62,34 @@ describe('APP Tests', function() {
 
     it('should fetch data from the API using query parameter "offset"', function(done) {
       request(app)
-        .get('/publications?offset=5')
+        .get('/articles?offset=5')
         .end((err, res) => {
           if (err) {
             console.error(err);
           }
           expect(res.statusCode).to.be.equal(200);
-          expect(res.body).to.haveOwnProperty('publications');
-          expect(res.body.publications).to.have.lengthOf(15);
+          expect(res.body).to.haveOwnProperty('articles');
+          expect(res.body.articles).to.have.lengthOf(15);
           done();
         });
     });
 
     it('should fetch data from the API using query parameters "offset" and "limit"', function(done) {
       request(app)
-        .get('/publications?limit=5&offset=5')
+        .get('/articles?limit=5&offset=5')
         .end((err, res) => {
           if (err) {
             console.error(err);
           }
-          const data1 = res.body.publications;
+          const data1 = res.body.articles;
 
           request(app)
-            .get('/publications?limit=5&offset=5')
+            .get('/articles?limit=5&offset=5')
             .end((err, res) => {
               if (err) {
                 console.error(err);
               }
-              const data2 = res.body.publications;
+              const data2 = res.body.articles;
 
               expect(data1).to.be.not.equal(data2);
 
@@ -100,13 +100,13 @@ describe('APP Tests', function() {
 
     it('should ensure the sorting by doi (asc)', function(done) {
       request(app)
-        .get('/publications')
+        .get('/articles')
         .end((err, res) => {
           if (err) {
             console.error(err);
           }
 
-          const data = res.body.publications;
+          const data = res.body.articles;
           expect(data[1].doi >= data[0].doi).to.be.equal(true);
 
           done();

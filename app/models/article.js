@@ -6,10 +6,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 /**
- * Publication Schema
+ * Article Schema
  */
 
-const PublicationSchema = new Schema({
+const ArticleSchema = new Schema({
   doi: { type: String, trim: true },
   title: { type: String, trim: true },
   issn: [{ type: String, trim: true }],
@@ -20,23 +20,17 @@ const PublicationSchema = new Schema({
  * Validations
  */
 
-PublicationSchema.path('doi').required(true, 'Publication doi cannot be blank');
-PublicationSchema.path('title').required(
-  true,
-  'Publication title cannot be blank'
-);
-PublicationSchema.path('issn').required(
-  true,
-  'Publication issn cannot be blank'
-);
+ArticleSchema.path('doi').required(true, 'Article doi cannot be blank');
+ArticleSchema.path('title').required(true, 'Article title cannot be blank');
+ArticleSchema.path('issn').required(true, 'Article issn cannot be blank');
 
 /**
  * Statics
  */
 
-PublicationSchema.statics = {
+ArticleSchema.statics = {
   /**
-   * List publications
+   * List articles
    *
    * @param {Object} options
    * @api private
@@ -53,5 +47,5 @@ PublicationSchema.statics = {
 };
 
 module.exports = {
-  Publication: mongoose.model('Publication', PublicationSchema)
+  Article: mongoose.model('Article', ArticleSchema)
 };

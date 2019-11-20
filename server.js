@@ -1,7 +1,7 @@
 // load env variables
 require('dotenv').config();
 
-require('./app/models/publication');
+require('./app/models/article.js');
 const express = require('express');
 const connect = require('./app/controllers/connectDb');
 const AttachRoutes = require('./app/controllers/routes');
