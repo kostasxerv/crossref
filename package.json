@@ -4,23 +4,28 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "cross-env NODE_ENV=development nodemon server.js",
+    "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha' ./test --timeout=10000 --exit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^6.0.3",
     "dotenv": "^8.2.0",
+    "eslint-plugin-mocha": "^6.2.1",
     "express": "^4.17.1",
-    "mongoose": "^5.7.11"
+    "mongoose": "^5.7.11",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
-    "babel-tape-runner": "~3.0.0",
+    "chai": "^4.2.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "~4.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "~3.1.0",
+    "mocha": "^6.2.2",
     "nodemon": "1.19.0",
     "prettier": "~1.17.1"
   }

@@ -1,9 +1,10 @@
 {
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:mocha/recommended"],
   "env": {
     "browser": false,
     "es6": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "parser": "babel-eslint",
   "rules": {
